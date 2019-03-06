@@ -21,7 +21,7 @@ public class DAOArmeImpl implements DAOArme{
 	@Override
 	public void insert(Arme entity) {
 		// TODO Auto-generated method stub
-		insertQuery("INSERT INTO `ARME` (`NOM`, `MATERIAU`) VALUES ('" + entity.getNom() +"', '"+entity.getMateriau()+"');");
+		insertQuery("INSERT INTO `ARME` (`ID`, `NOM`, `MATERIAU`) VALUES ('" + entity.getId() +"','" + entity.getNom() +"', '"+entity.getMateriau()+"');");
 	}
 
 	@Override
@@ -36,6 +36,7 @@ public class DAOArmeImpl implements DAOArme{
 		ResultSet rs = query("SELECT * FROM ARME");
 		try {
 			while(rs.next()){
+				String id = rs.getId("ID");
 				String nom = rs.getString("NOM");
 				String materiau = rs.getString("MATERIAU");
 				Arme a = new Arme();
