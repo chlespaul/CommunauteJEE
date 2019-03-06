@@ -33,7 +33,9 @@ public class ServiceHobbitImpl implements ServiceHobbit{
 		// TODO Auto-generated method stub
 		DAOHobbitImpl daoHobbitImpl = new DAOHobbitImpl();
 		Hobbit h = daoHobbitImpl.findById(entity);
-		assignArme(h);
+		DAOArmeImpl daoArmeImpl = new DAOArmeImpl();
+		Arme a = daoArmeImpl.findById(h.getArme().getId());
+		h.setArme(a);
 		
 		return h;
 	}
@@ -42,12 +44,7 @@ public class ServiceHobbitImpl implements ServiceHobbit{
 	public List<Hobbit> findAll() {
 		// TODO Auto-generated method stub
 		AOHobbitImpl daoHobbitImpl = new DAOHobbitImpl();
-		List<Hobbit> list = daoHobbitImpl.findAll();
-		for(Hobbit h: list){
-		  assignArme(h);
-		}
-		
-		return list;
+		return daoHobbitImpl.findAll();
 	}
 
 	@Override
@@ -58,12 +55,6 @@ public class ServiceHobbitImpl implements ServiceHobbit{
 		
 		DAOHobbitImpl daoHobbitImpl = new DAOHobbitImpl();
 		daoHobbitImpl.update(entity);
-	}
-	
-	public void assignArme(Hobbit h){
-		DAOArmeImpl daoArmeImpl = new DAOArmeImpl();
-		Arme a = daoArmeImpl.findById(h.getArme().getId());
-		h.setArme(a);
 	}
 	
 }
