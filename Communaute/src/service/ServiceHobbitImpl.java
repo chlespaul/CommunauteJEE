@@ -1,8 +1,8 @@
 package service;
 
 import java.util.List;
-
 import bean.Hobbit;
+import bean.Arme;
 import dao.DAOArmeImpl;
 import dao.DAOHobbitImpl;
 
@@ -31,13 +31,9 @@ public class ServiceHobbitImpl implements ServiceHobbit{
 	@Override
 	public Hobbit findById(int id) {
 		// TODO Auto-generated method stub
-		DAOArmeImpl daoArmeImpl = new DAOArmeImpl();
-		daoArmeImpl.findById(entity.getArme());
-		
 		DAOHobbitImpl daoHobbitImpl = new DAOHobbitImpl();
-		daoHobbitImpl.findById(entity);
-		
-		
+		Hobbit h = daoHobbitImpl.findById(entity);
+		assignArme(h);
 		
 		return h;
 	}
@@ -45,7 +41,13 @@ public class ServiceHobbitImpl implements ServiceHobbit{
 	@Override
 	public List<Hobbit> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		AOHobbitImpl daoHobbitImpl = new DAOHobbitImpl();
+		List<Hobbit> list = daoHobbitImpl.findAll();
+		for(Hobbit h: list){
+		  assignArme(h);
+		}
+		
+		return list;
 	}
 
 	@Override
@@ -56,7 +58,12 @@ public class ServiceHobbitImpl implements ServiceHobbit{
 		
 		DAOHobbitImpl daoHobbitImpl = new DAOHobbitImpl();
 		daoHobbitImpl.update(entity);
-		
+	}
+	
+	public void assignArme(Hobbit h){
+		DAOArmeImpl daoArmeImpl = new DAOArmeImpl();
+		Arme a = daoArmeImpl.findById(h.getArme().getId());
+		h.setArme(a);
 	}
 	
 }
