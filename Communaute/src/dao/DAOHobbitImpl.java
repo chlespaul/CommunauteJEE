@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Hobbit;
+import bean.Arme;
 
 public class DAOHobbitImpl implements DAOHobbit{
 
@@ -33,16 +34,25 @@ public class DAOHobbitImpl implements DAOHobbit{
 	@Override
 	public List<Hobbit> findAll() {
 		List<Hobbit> l = new ArrayList<>();
-		ResultSet rs = query("SELECT * FROM HOBBIT");
+		ResultSet rs = query("SELECT h.NOM, h.RACE, h.DESCRIPTION, a.ID, a.NOM as NOM_ARME, a.MATERIAU FROM HOBBIT h LEFT OUTER JOIN ARME a ON h.arme = a.id");
 		try {
 			while(rs.next()){
+				String id = rs.getString("ID");
+				String nomArme = rs.getString("NOM_ARME");
+				String materiau = rs.getString("MATERIAU");
+				Arme a = new Arme();
+				a.setId(id);
+				a.setNom(nomArme);
+				a.setMateriau(materiau);
+				
 				String nom = rs.getString("NOM");
 				String race = rs.getString("RACE");
 				String description = rs.getString("DESCRIPTION");
 				Hobbit h = new Hobbit();
 				h.setNom(nom);
 				h.setRace(race);
-				System.out.println("nom: " + nom);
+				h.setDescription(description);
+				h.setArme(a);
 				l.add(h);
 			}
 		} catch(Exception e){}
